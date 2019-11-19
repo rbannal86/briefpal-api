@@ -21,6 +21,42 @@ const LettersService = {
       sender: xss(letter.sender),
       recipient: xss(letter.recipient)
     }
+  },
+
+  randomizeRecipient(db, sender) {
+    return db
+      .raw('SELECT id FROM briefpal_users OFFSET random() * (SELECT COUNT(*) - 1 from briefpal_users) LIMIT 1;')
+  },
+
+  findRecipient(db, sender) {
+    return this.randomizeRecipient(db, sender)
+      .then(result => { 
+        if(parseInt(sender) === result.rows[0].id) {
+          return result.rows[0].id + 1
+        }
+        else {
+          return result.rows[0].id
+        } 
+    })
+  },
+  
+  insertLetter(db, newLetter) {
+    return db
+      .insert(newLetter)
+      .into('briefpal_letters')
+      .returning('*')
+      .then(([letter]) => letter)
+      .then(letter =>
+        LettersService.getById(db, letter.id)
+      )
+  },
+
+  deleteLetter(db, id) {
+    console.log(id)
+    return db
+      .from('briefpal_letters AS letter')
+      .where('letter.id', id)
+      .del()
   }
 }
 

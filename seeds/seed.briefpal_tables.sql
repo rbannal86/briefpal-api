@@ -1,13 +1,14 @@
 BEGIN;
 
 TRUNCATE
-  briefpal_users,
+  briefpal_conversations,
   briefpal_letters,
-  briefpal_conversations;
+  briefpal_users
+  RESTART IDENTITY CASCADE;
 
 INSERT INTO briefpal_users (user_name, password)
 VALUES
-  ('userOne', 'password'),
+  ('userOne', '$2a$12$fbk6DbW.GGoAXh6qp40xoeb6rt4KTgnUtivYX6Rda37.Hqkghha1G'),
   ('userTwo', 'passwordtwo'),
   ('userThree', 'passwordthree'),
   ('userFour', 'passwordfour'),
