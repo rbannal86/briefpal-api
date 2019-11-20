@@ -18,5 +18,6 @@ CREATE TABLE briefpal_conversations (
   user_two INTEGER REFERENCES briefpal_users(id),
   letter_one INTEGER REFERENCES briefpal_letters(id),
   letter_two INTEGER REFERENCES briefpal_letters(id),
-  letter_three INTEGER REFERENCES briefpal_letters(id)
+  letter_three INTEGER REFERENCES briefpal_letters(id),
+  letter_count INTEGER CHECK (letter_count < 4) DEFAULT 1
 );

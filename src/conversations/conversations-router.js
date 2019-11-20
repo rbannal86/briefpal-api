@@ -22,45 +22,34 @@ conversationsRouter
     const newLetter = { sender: parseInt(user_id), content }
     let convo
 
-    if(newLetter.content == null)
+    if(newLetter.content === null || newLetter.content === '')
       return res.status(400).json({
         error: 'Letter must contain content'
       })
 
     ConversationsService.getById(req.app.get('db'), req.params.conversation_id)
-    .then(res => {return convo = res})
-    .then(res => {return ConversationsService.checkConversationUsers(res, newLetter)})
-    .then(res => {
-      if(res.error) {
-        throw(res.error)
-      } else {
-        newLetter.recipient = res
-      }})
-    // .then(res => {return LettersService.insertLetter(req.app.get('db'), newLetter)})
-    .then(res => {return LettersService.insertLetter(req.app.get('db'), newLetter)})
-    .then(res => {return ConversationsService.checkConversationStatus(convo, res)})
-    .then(res => {
-      if(res.error){ 
-        let error = res.error
-        LettersService.deleteLetter(req.app.get('db'), res.letter.id)
-        .then(Promise.reject(new Error('End of conversation')))
-      }
-      // if(res.error) {
-      //   throw(res.error)
-      // }
-          
-        // LettersService.deleteLetter(req.app.get('db'), res.letter.id)
-        // throw res.error
-       else {
-          return ConversationsService.updateConversation(res, req.app.get('db'), req.params.conversation_id)}
-        })
-    .then(res => {return res})
-    .catch()
-    // LettersService.insertLetter(req.app.get('db'), newLetter)
-    // let convo
-    // let letter
-
-    
+      .then(res => {
+        console.log('checking count')
+        if(res.letter_count === 3) {
+          throw( 'End of conversation' )
+        } else { return convo = res }}
+      )
+      .then(res => {return ConversationsService.checkConversationUsers(res, newLetter)})
+      .then(res => {
+        if(res.error) {
+          throw(res.error)
+        } else {
+          newLetter.recipient = res
+        }})
+      .then(res => {return LettersService.insertLetter(req.app.get('db'), newLetter)})
+      .then(res => {newLetter.id = res.id 
+        return res
+      })
+      .then(res => { return ConversationsService.checkConversationStatus(convo, res) })
+      .then(res => { return ConversationsService.updateConversation(res, req.app.get('db'), req.params.conversation_id) })
+      .then(conversation => {return res.json(ConversationsService.serializeConversation(conversation))})
+      .catch(error => {
+        return res.status(400).json({error: error})})   
   })
 
 conversationsRouter
@@ -95,6 +84,7 @@ async function checkConversationExists(req, res, next) {
     next(error)
   }
 }
+
 
 async function checkLetterWithinConversationExists(req, res, next) {
   try {

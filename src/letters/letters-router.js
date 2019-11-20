@@ -12,7 +12,7 @@ lettersRouter
   .post(jsonBodyParser, (req, res, next) => {
     const { user_id, content } = req.body
     const newLetter = { content }
-
+    console.log('posting new letter')
     if(newLetter.content == null)
       return res.status(400).json({
         error: 'Letter must contain content'
@@ -46,7 +46,7 @@ lettersRouter
 
 
 lettersRouter
-  .route('/:letter_id')
+  .route('/getletters/:letter_id')
   .all(checkLetterExists)
   .get((req, res) => {
     res.json(LettersService.serializeLetter(res.letter))

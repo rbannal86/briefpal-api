@@ -23,11 +23,11 @@ VALUES
   ('Is this thing on?', 5, 1),
   ('Yes, it is!', 1, 5);
 
-INSERT INTO briefpal_conversations (user_one, user_two, letter_one, letter_two, letter_three)
+INSERT INTO briefpal_conversations (user_one, user_two, letter_one, letter_two, letter_three, letter_count)
 VALUES
-  (1, 5, 2, 5, 6),
-  (2, 4, 3, null, null),
-  (1, 2, 1, 3, null),
-  (3, 1, 4, null, null);
+  (1, 5, 2, 5, 6, 3),
+  (2, 4, 3, null, null, 1),
+  (1, 2, 1, 3, null, 2),
+  (3, 1, 4, null, null, 1);
 
 COMMIT;
