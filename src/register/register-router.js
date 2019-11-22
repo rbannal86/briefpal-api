@@ -9,8 +9,10 @@ registerRouter
   .route('/')
   .post(jsonBodyParser, (req, res, next) => {
     console.log(req.body)
+    console.log(req.body.password)
     const { user_name, password } = req.body
     let newUser = { user_name, password }
+    let user_id
     newUser = RegisterService.serializeNewUser(newUser)
     AuthService.hashPassword(newUser.password)
       .then(res => {
@@ -23,9 +25,13 @@ registerRouter
         if(res.error) {
           throw(res.error)
         } else {
-          console.log(res)
           return res
         }
+      })
+      .then(res => {
+        const sub = user_name
+        const payload = {user_id: res.id }
+        return AuthService.createJwt(sub, payload)
       })
       .then(data => {
         return res.json(data)
