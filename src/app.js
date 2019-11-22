@@ -8,6 +8,7 @@ const lettersRouter = require('./letters/letters-router')
 const conversationsRouter = require('./conversations/conversations-router')
 const authRouter = require('./auth/auth-router')
 const userRouter = require('./users/users-router')
+const registerRouter = require('./register/register-router')
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api/letters', lettersRouter)
 app.use('/api/conversations', conversationsRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/users', userRouter)
+app.use('/api/register', registerRouter)
 
 app.use(function errorHandler(error, req, res, next){
   let response;

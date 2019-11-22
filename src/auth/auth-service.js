@@ -30,6 +30,9 @@ const AuthService = {
       .from(token, 'base64')
       .toString()
       .split(':')
+  },
+  hashPassword(password) {
+    return bcrypt.hash(password, 12)
   }
 }
 
