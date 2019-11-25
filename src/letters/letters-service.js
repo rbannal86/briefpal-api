@@ -32,7 +32,8 @@ const LettersService = {
     return this.randomizeRecipient(db, sender)
       .then(result => { 
         if(parseInt(sender) === result.rows[0].id) {
-          return result.rows[0].id + 1
+          console.log('STARTING OVER RECIPIENT SEARCH')
+          return this.findRecipient(db, sender)
         }
         else {
           return result.rows[0].id
