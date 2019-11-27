@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 
 function makeUsersArray() {
-  console.log('users')
   return [
     {
       id: 1,
@@ -37,7 +36,6 @@ function makeUsersArray() {
 }
 
 function makeLettersArray(users) {
-  console.log('letters')
   return [
     {
       id: 1,
@@ -85,7 +83,6 @@ function makeLettersArray(users) {
 }
 
 function makeConversationsArray(users, letters) {
-  console.log('conversation')
   return [
     {
       id: 1,
@@ -121,13 +118,11 @@ function makeConversationsArray(users, letters) {
 }
 
 function seedUsers(db, users) {
-  console.log('seeding users')
   const preppedUsers = users.map(user => ({
     ...user,
     password: bcrypt.hashSync(user.password, 1)
   }))
-  return db.into('briefpal_users').insert(preppedUsers).returning('*')
-    .then(res => console.log(res))      
+  return db.into('briefpal_users').insert(preppedUsers).returning('*')  
     .then(() => {
       
       return db.raw(

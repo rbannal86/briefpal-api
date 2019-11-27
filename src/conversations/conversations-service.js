@@ -72,20 +72,8 @@ const ConversationsService = {
         )
   },
   getAllConversationsByUser(user, db) {
-    console.log(user)
     return db
       .raw('SELECT * FROM briefpal_conversations WHERE user_one = ? OR user_two = ?;', [user])
-      // .from('briefpal_conversations AS convo')
-      // .where(function () {
-      //   this.where('convo.user_one', user)
-      //     .orWhere('convo.user_two', user)
-      // })
-      // .select('*')
-      // .returning('*')
-      // .then(([conversations]) => conversations)
-      // .then(conversations => conversations.map( conversation =>
-      //   ConversationsService.getById(db, conversation)
-      // ))
   }
 }
 

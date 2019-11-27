@@ -46,11 +46,7 @@ const LettersService = {
       .into('briefpal_letters')
       .returning('*')
       .then(([letter]) => {
-        console.log(letter)
         return letter})
-      // .then(letter =>
-      //   LettersService.getById(db, letter.id)
-      // )
   },
 }
 

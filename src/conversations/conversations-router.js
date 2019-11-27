@@ -29,7 +29,6 @@ conversationsRouter
 
     ConversationsService.getById(req.app.get('db'), req.params.conversation_id)
       .then(res => {
-        console.log('checking count')
         if(res.letter_count === 3) {
           throw( 'End of conversation' )
         } else { return convo = res }}

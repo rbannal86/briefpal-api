@@ -34,7 +34,6 @@ lettersRouter
       .then(res => { 
         return LettersService.insertLetter(req.app.get('db'), newLetter) })
       .then(res => {
-        console.log('line 40 lr: '+res.sender)
         newConversation.user_one = res.sender
         newConversation.user_two = res.recipient
         newConversation.letter_one = res.id

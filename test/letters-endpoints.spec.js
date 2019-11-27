@@ -78,7 +78,7 @@ describe('Letters Endpoints', function() {
         .send(newLetter)
         .expect(200)
         .expect(res => {
-          expect(res.recipient).to.not.eql(testUser.id)
+          expect(res).to.not.eql(testUser.id)
         })
     })
   })
