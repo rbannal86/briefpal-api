@@ -23,7 +23,6 @@ describe('Letters Endpoints', function() {
 
   before('cleanup', () => helpers.cleanTables(db))
 
-
   afterEach('cleanup', () => helpers.cleanTables(db))
 
   describe(`GET /api/letters/getletters/:letter_id`, () => {
@@ -38,8 +37,8 @@ describe('Letters Endpoints', function() {
     context(`Given there are letters in the database`, () => {
       beforeEach('insert letters', () => {
         return helpers.seedUsers(db, testUsers)
-        .then(helpers.seedLettersTable(db, testUsers, testLetters))
-        .then(helpers.seedConversationsTable(db, testUsers, testLetters, testConversations))
+        .then(() => helpers.seedLettersTable(db, testUsers, testLetters))
+        .then(() => helpers.seedConversationsTable(db, testUsers, testLetters, testConversations))
       })
       it('responds with 200 and the correct letter', () => {
         const expectedLetter = {
@@ -58,8 +57,8 @@ describe('Letters Endpoints', function() {
   describe(`POST /api/letters/newletter`, () => {
     beforeEach('insert conversations', () => {
       return helpers.seedUsers(db, testUsers)
-      .then(helpers.seedLettersTable(db, testUsers, testLetters))
-      .then(helpers.seedConversationsTable(db, testUsers, testLetters, testConversations))
+      .then(() => helpers.seedLettersTable(db, testUsers, testLetters))
+      .then(() => helpers.seedConversationsTable(db, testUsers, testLetters, testConversations))
     })
 
     it(`returns 400 when letter content is empty`, () => {
@@ -71,8 +70,7 @@ describe('Letters Endpoints', function() {
         .expect(400, {"error":"Letter must contain content"})
     })
 
-    it.only(`creates a new letter, responds with 200 and the new letter`, function(){
-      // this.retries(5)
+    it(`creates a new letter, responds with 200 and the new letter`, function(){
       const testUser = testUsers[4]
       const newLetter = { user_id: testUser.id, content: 'test' }
       return supertest(app)

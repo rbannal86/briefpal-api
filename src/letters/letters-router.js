@@ -30,11 +30,8 @@ lettersRouter
     LettersService.findRecipient(req.app.get('db'), newLetter.sender)
       .then(recipient => {
         saveRecipient(recipient)
-        return newRecipient = res.json({recipient}).recipient})
+        return })
       .then(res => { 
-        console.log(newLetter)
-        // console.log(req.app.get('db'))
-
         return LettersService.insertLetter(req.app.get('db'), newLetter) })
       .then(res => {
         console.log('line 40 lr: '+res.sender)
@@ -44,6 +41,7 @@ lettersRouter
         return newConversation
       })
       .then(res => ConversationsService.insertConversation(req.app.get('db'), res))
+      .then(() => res.json(newRecipient))
       .catch(next)
   })
 
