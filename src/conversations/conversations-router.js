@@ -59,13 +59,6 @@ conversationsRouter
     res.json(LettersService.serializeLetter(res.letter))
   })
 
-conversationsRouter
-  .route('/:user_id/all_conversations')
-  .get((req, res) => {
-    ConversationsService.getAllConversationsByUser(req.params.user_id, req.app.get('db'))
-      res.json(res)
-  })
-
 async function checkConversationExists(req, res, next) {
   try {
     const conversation = await ConversationsService.getById(

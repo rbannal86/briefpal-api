@@ -12,7 +12,6 @@ lettersRouter
   .post(jsonBodyParser, (req, res, next) => {
     const { user_id, content } = req.body
     const newLetter = { content }
-    console.log('posting new letter')
     if(newLetter.content == null)
       return res.status(400).json({
         error: 'Letter must contain content'
@@ -24,18 +23,22 @@ lettersRouter
     function saveRecipient(result){
       newRecipient = result
       newLetter.recipient = newRecipient
-      console.log(newLetter)
     }
 
     newLetter.sender = user_id
-
+    
     LettersService.findRecipient(req.app.get('db'), newLetter.sender)
       .then(recipient => {
         saveRecipient(recipient)
         return newRecipient = res.json({recipient}).recipient})
-      .then(res => LettersService.insertLetter(req.app.get('db'), newLetter))
+      .then(res => { 
+        console.log(newLetter)
+        // console.log(req.app.get('db'))
+
+        return LettersService.insertLetter(req.app.get('db'), newLetter) })
       .then(res => {
-        newConversation.user_one = parseInt(res.sender)
+        console.log('line 40 lr: '+res.sender)
+        newConversation.user_one = res.sender
         newConversation.user_two = res.recipient
         newConversation.letter_one = res.id
         return newConversation
