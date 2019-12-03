@@ -23,11 +23,13 @@ const LettersService = {
     }
   },
 
+  //randomly selects an id from the users table
   randomizeRecipient(db) {
     return db
       .raw('SELECT id FROM briefpal_users OFFSET random() * (SELECT COUNT(*) - 1 from briefpal_users) LIMIT 1;')
   },
 
+  //finds recipient for a new conversation, re-runs if the recipient is the same as the sender
   findRecipient(db, sender) {
     return this.randomizeRecipient(db)
       .then(result => { 

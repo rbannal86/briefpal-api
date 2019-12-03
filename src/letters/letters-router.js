@@ -1,7 +1,5 @@
 const express = require('express')
-const path = require('path')
 const LettersService = require('./letters-service')
-const { requireAuth } = require('../middleware/jwt-auth')
 const ConversationsService = require('../conversations/conversations-service')
 
 const lettersRouter = express.Router()

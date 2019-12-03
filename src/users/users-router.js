@@ -1,10 +1,7 @@
 const express = require('express')
-const path = require('path')
 const UsersService = require('./users-services')
-const ConversationsService = require('../conversations/conversations-service')
 
 const usersRouter = express.Router()
-const jsonBodyParser = express.json()
 
 usersRouter
   .route('/:user_name')
@@ -12,7 +9,6 @@ usersRouter
   .get((req, res) => {
     res.json(UsersService.serializeUser(res.user))
   })
-  // .then(res => {return UsersService.serializeUser(res)})
 
 usersRouter
   .route('/:user_name/conversations')

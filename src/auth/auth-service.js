@@ -18,17 +18,6 @@ const AuthService = {
       algorithm: 'HS256'
     })
   },
-  verifyJwt(token) {
-    return jwt.verify(token, config.JWT_SECRET, {
-      algorithms: ['HS256']
-    })
-  },
-  parseBasicToken(token) {
-    return Buffer
-      .from(token, 'base64')
-      .toString()
-      .split(':')
-  },
   hashPassword(password) {
     return bcrypt.hash(password, 12)
   }

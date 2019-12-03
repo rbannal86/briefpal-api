@@ -1,8 +1,6 @@
 const express = require('express')
-const path = require('path')
 const ConversationsService = require('./conversations-service')
 const LettersService = require('../letters/letters-service')
-const LettersRouter = require('../letters/letters-router')
 
 const conversationsRouter = express.Router()
 const jsonBodyParser = express.json()

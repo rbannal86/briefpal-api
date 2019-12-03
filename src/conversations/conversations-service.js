@@ -1,6 +1,3 @@
-const xss = require('xss')
-const LettersService = require('../letters/letters-service')
-
 const ConversationsService = {
   getById(db, id) {
     return db
